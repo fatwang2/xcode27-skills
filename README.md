@@ -2,7 +2,7 @@
 
 A collection of [Agent Skills](https://docs.claude.com/en/docs/claude-code/skills) exported from **Xcode 27**. These skills give AI coding agents (Claude Code, etc.) authoritative, up-to-date guidance for building Apple platform apps — covering SwiftUI, UIKit modernization, Swift Testing, C bounds-safety, Xcode security hardening, and on-device verification.
 
-> **Attribution / 归属**
+> **Attribution**
 > The content of these skills was authored and published by **Apple** and exported from Xcode 27. This repository is a redistribution for convenience and reference only. All rights to the underlying guidance belong to Apple. No license is granted by this repository over Apple's content.
 
 ## Skills
@@ -23,36 +23,36 @@ Each top-level directory in this repo is a self-contained skill. Pick whichever 
 
 ### Option 1 — `npx skills` (universal, recommended)
 
-The [`skills`](https://www.npmjs.com/package/skills) CLI installs a skill into any supported agent (Claude Code, Codex, etc.) and lets you choose project-local or global scope interactively. Install one skill at a time with `--skill`:
+The [`skills`](https://www.npmjs.com/package/skills) CLI auto-detects your agent (Claude Code, Codex, etc.) and installs into it. Point it at this repo with the `owner/repo` shorthand:
 
 ```sh
-npx skills add https://github.com/fatwang2/xcode27-skills --skill swiftui-specialist
+# Pick interactively from the list of skills:
+npx skills add superagents-lab/xcode27-skills
+
+# Install one specific skill:
+npx skills add superagents-lab/xcode27-skills --skill swiftui-specialist
+
+# Install all seven:
+npx skills add superagents-lab/xcode27-skills --skill '*'
 ```
 
-Swap in any skill name from the [table above](#skills) — e.g. `--skill swiftui-whats-new-27`, `--skill test-modernizer`. Omit `--skill` to pick from a list.
+Useful flags: `--list` to preview the skills without installing, `-g`/`--global` to install at the user level instead of the current project, and `--copy` to copy files instead of symlinking. Swap in any skill name from the [table above](#skills).
 
 > Requires Node. If `npx` is missing, install it first: `brew install node`.
 
-### Option 2 — Manual install (Claude Code)
+### Option 2 — Manual install (any agent)
 
-Clone the repo and copy the skill directories into your skills path. Use `~/.claude/skills/` to make them available globally, or `<your-project>/.claude/skills/` to scope them to one project.
+A skill is just a directory containing a `SKILL.md`, so any agent that supports the Agent Skills format can use it — clone the repo and copy the skill directories into wherever your agent looks for skills.
 
 ```sh
-git clone https://github.com/fatwang2/xcode27-skills.git
-mkdir -p ~/.claude/skills
+git clone https://github.com/superagents-lab/xcode27-skills.git
 
-# Install all seven skills globally…
-cp -R xcode27-skills/*/ ~/.claude/skills/
-
-# …or just the one you want:
-cp -R xcode27-skills/swiftui-specialist ~/.claude/skills/
+# Copy all seven skills, or just the ones you want, into your agent's skills directory:
+cp -R xcode27-skills/*/ <your-skills-directory>/
+cp -R xcode27-skills/swiftui-specialist <your-skills-directory>/
 ```
 
-Claude Code auto-discovers any directory containing a `SKILL.md` and surfaces it when a task matches the skill's `description`.
-
-### Option 3 — Xcode 27
-
-These skills were exported *from* Xcode 27, so they can be loaded back into Xcode's coding intelligence. In Xcode, open the skills/agent settings and import (or point it at) a skill directory from this repo. Xcode reads the same `SKILL.md` format.
+The agent auto-discovers any directory containing a `SKILL.md` and surfaces it when a task matches the skill's `description`.
 
 ## Structure
 
